@@ -1,0 +1,73 @@
+class kolko_i_krzyzyk:
+    def __init__(self):
+        self.board = [" "] * 9
+        self.current_player = "X"
+    
+    def draw_board(self):
+        """Rysuje planszę"""
+        print(" {} | {} | {} ".format(self.board[0], self.board[1], self.board[2]))
+        print("-----------")
+        print(" {} | {} | {} ".format(self.board[3], self.board[4], self.board[5]))
+        print("-----------")
+        print(" {} | {} | {} ".format(self.board[6], self.board[7], self.board[8]))
+    
+    def make_move(self, move):
+        """Zapisuje ruch gracza na planszy"""
+        if self.board[move] == " ":
+            self.board[move] = self.current_player
+            return True
+        else:
+            return False
+    
+    def check_win(self):
+        """Sprawdza, czy gracz wygrał"""
+        if self.board[0] == self.board[1] == self.board[2] != " ":
+            return True
+        elif self.board[3] == self.board[4] == self.board[5] != " ":
+            return True
+        elif self.board[6] == self.board[7] == self.board[8] != " ":
+            return True
+        elif self.board[0] == self.board[3] == self.board[6] != " ":
+            return True
+        elif self.board[1] == self.board[4] == self.board[7] != " ":
+            return True
+        elif self.board[2] == self.board[5] == self.board[8] != " ":
+            return True
+        elif self.board[0] == self.board[4] == self.board[8] != " ":
+            return True
+        elif self.board[2] == self.board[4] == self.board[6] != " ":
+            return True
+        else:
+            return False
+    
+    def switch_player(self):
+        """Zmienia aktualnego gracza"""
+        if self.current_player == "X":
+            self.current_player = "O"
+        else:
+            self.current_player = "X"
+    
+    def play_game(self):
+        """Główna pętla gry"""
+        winner = None
+        while not winner:
+            self.draw_board()
+            print("Ruch gracza", self.current_player)
+            move = input("Wybierz pole (1-9): ")
+            move = int(move) - 1  # Przekształcamy numer pola (1-9) na indeks planszy (0-8)
+            if move >= 0 and move <= 8:
+                if self.make_move(move):
+                    if self.check_win():
+                        winner = self.current_player
+                    else:
+                        self.switch_player()
+                else:
+                    print("To pole jest już zajęte!")
+            else:
+                print("Nieprawidłowy ruch!")
+        
+        self.draw_board()
+        print("Wygrał gracz", winner)
+
+game = kolko_i_krzyzyk()
+game.play_game()
