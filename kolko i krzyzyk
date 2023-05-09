@@ -1,3 +1,4 @@
+#Bartosz Galus, Mateusz Janaś
 class kolko_i_krzyzyk:
     def __init__(self):
         self.board = [" "] * 9
